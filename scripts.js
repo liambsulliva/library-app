@@ -1,18 +1,14 @@
 const myLibrary = [];
 let currentID = 1;
 
-function Book(title, author) {
+function game(title, platform) {
     this.title = title;
-    this.author = author;
+    this.platform = platform;
     this.id = currentID;
     currentID++;
 }
 
-// Starter Books
-addBookToLibrary(new Book("Othello", "William Shakespeare"));
-addBookToLibrary(new Book("Percy Jackson - The Lightning Thief", "Rick Riordan"));
-
-function displayBooks() {
+function displaygames() {
     const tableContainer = document.getElementById('tableContainer');
     tableContainer.innerHTML = '';
 
@@ -24,9 +20,9 @@ function displayBooks() {
     titleHeader.textContent = 'Title';
     theadRow.appendChild(titleHeader);
 
-    const authorHeader = document.createElement('th');
-    authorHeader.textContent = 'Author'
-    theadRow.appendChild(authorHeader);
+    const platformHeader = document.createElement('th');
+    platformHeader.textContent = 'Platform'
+    theadRow.appendChild(platformHeader);
 
     const removalHeader = document.createElement('th');
     removalHeader.textContent = '';
@@ -37,21 +33,21 @@ function displayBooks() {
 
     const tbody = document.createElement('tbody');
 
-    myLibrary.forEach(book => {
+    myLibrary.forEach(game => {
         const row = document.createElement('tr');
 
         const titleCell = document.createElement('td');
-        titleCell.textContent = book.title;
+        titleCell.textContent = game.title;
         row.appendChild(titleCell);
 
-        const authorCell = document.createElement('td');
-        authorCell.textContent = book.author;
-        row.appendChild(authorCell);
+        const platformCell = document.createElement('td');
+        platformCell.textContent = game.platform;
+        row.appendChild(platformCell);
 
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         const checkboxCell = document.createElement('td');
-        checkboxCell.textContent = 'Read';
+        checkboxCell.textContent = 'Played';
         checkboxCell.appendChild(checkbox);
         row.appendChild(checkboxCell);
 
@@ -64,7 +60,7 @@ function displayBooks() {
         tbody.appendChild(row);
 
         removalCell.addEventListener("click", () => {
-            myLibrary.pop(book);
+            myLibrary.pop(game);
             tbody.removeChild(row);
         });
     });
@@ -75,22 +71,22 @@ function displayBooks() {
 
 const addButton = document.getElementById('add');
 const addContainer = document.getElementById('adderContainer');
-let bookForm;
+let gameForm;
 addButton.addEventListener('click', () => {
-    if (!addContainer.hasChildNodes(bookForm)) {
-        bookForm = document.createElement('div');
-        bookForm.id = 'bookForm';
-        bookForm.style.padding = '30px';
-        bookForm.style.marginLeft = '100px';
-        bookForm.style.marginRight = '100px';
-        bookForm.style.marginBottom = '25px';
-        bookForm.style.border = '1px solid #ccc';
-        bookForm.style.backgroundColor = '#f1f1f1';
+    if (!addContainer.hasChildNodes(gameForm)) {
+        gameForm = document.createElement('div');
+        gameForm.id = 'gameForm';
+        gameForm.style.padding = '30px';
+        gameForm.style.marginLeft = '100px';
+        gameForm.style.marginRight = '100px';
+        gameForm.style.marginBottom = '25px';
+        gameForm.style.border = '1px solid #ccc';
+        gameForm.style.backgroundColor = '#f1f1f1';
 
         const formTitle = document.createElement('h3');
-        formTitle.textContent = 'Add New Book';
+        formTitle.textContent = 'Add New Game';
         formTitle.style.textAlign = 'center';
-        bookForm.appendChild(formTitle);
+        gameForm.appendChild(formTitle);
 
         const form = document.createElement('form');
 
@@ -108,62 +104,62 @@ addButton.addEventListener('click', () => {
         form.appendChild(title);
         form.appendChild(document.createElement('br'));
 
-        const author = document.createElement('div');
-        const authorLabel = document.createElement('label');
-        authorLabel.textContent = 'Author: ';
-        author.style.margin = 'auto';
-        const authorInput = document.createElement('input');
-        authorInput.type = 'text';
-        authorInput.id = 'author';
-        authorInput.name = 'author';
-        authorInput.required = true;
-        author.appendChild(authorLabel);
-        author.appendChild(authorInput);
-        form.appendChild(author);
+        const platform = document.createElement('div');
+        const platformLabel = document.createElement('label');
+        platformLabel.textContent = 'Platform: ';
+        platform.style.margin = 'auto';
+        const platformInput = document.createElement('input');
+        platformInput.type = 'text';
+        platformInput.id = 'platform';
+        platformInput.name = 'platform';
+        platformInput.required = true;
+        platform.appendChild(platformLabel);
+        platform.appendChild(platformInput);
+        form.appendChild(platform);
         form.appendChild(document.createElement('br'));
 
         const submitButton = document.createElement('button');
         submitButton.type = 'button';
-        submitButton.id = 'submitBook';
-        submitButton.textContent = 'Add Book';
+        submitButton.id = 'submitgame';
+        submitButton.textContent = 'Add Game';
         form.appendChild(submitButton);
 
-        bookForm.appendChild(form);
+        gameForm.appendChild(form);
 
-        addContainer.appendChild(bookForm);
+        addContainer.appendChild(gameForm);
 
         form.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 const title = titleInput.value.trim();
-                const author = authorInput.value.trim();
-                if (title && author) {
-                    addBookToLibrary(new Book(title, author));
+                const platform = platformInput.value.trim();
+                if (title && platform) {
+                    addgameToLibrary(new game(title, platform));
                     titleInput.value = '';
-                    authorInput.value = '';
-                    addContainer.removeChild(bookForm);
+                    platformInput.value = '';
+                    addContainer.removeChild(gameForm);
                 } else {
-                    alert('Please enter a title and author.');
+                    alert('Please enter a title and platform.');
                 }
             }
         });
         submitButton.addEventListener('click', () => {
             const title = titleInput.value.trim();
-            const author = authorInput.value.trim();
-            if (title && author) {
-                addBookToLibrary(new Book(title, author));
+            const platform = platformInput.value.trim();
+            if (title && platform) {
+                addgameToLibrary(new game(title, platform));
                 titleInput.value = '';
-                authorInput.value = '';
-                addContainer.removeChild(bookForm);
+                platformInput.value = '';
+                addContainer.removeChild(gameForm);
             } else {
-                alert('Please enter a title and author.');
+                alert('Please enter a title and platform.');
             }
         });
     } else {
-        addContainer.removeChild(bookForm);
+        addContainer.removeChild(gameForm);
     }
 }); 
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
-    displayBooks();
+function addgameToLibrary(game) {
+    myLibrary.push(game);
+    displaygames();
 }
