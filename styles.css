@@ -31,17 +31,6 @@ body {
     padding-left: 32px;
 }
 
-.new-row {
-    height: 0;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-}
-
-.new-row.expanding {
-    height: auto;
-    opacity: 1;
-}
-
 p {
     font-family: 'Arial', 'sans-serif';
     text-align: center;

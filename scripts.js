@@ -1,47 +1,64 @@
-const myLibrary = [];
+let myLibrary = [];
 
 function game(title, platform) {
     this.title = title;
     this.platform = platform;
+    this.played = false;
 }
 
-function displaygames() {
-    const table = document.querySelector('#table');
-    const tBody = document.createElement('tBody');
+window.addEventListener('load', () => {
+    const gamesString = localStorage.getItem('Games');
+    if (gamesString) {
+        myLibrary = JSON.parse(gamesString);
+        for (const game of myLibrary) {
+            displayGame(game);
+        }
+    }
+});
 
-    myLibrary.forEach(game => {
-        const row = document.createElement('tr');
+const table = document.querySelector('#table');
+const tBody = document.createElement('tBody');
+function displayGame(game) {
+    const row = document.createElement('tr');
 
-        const titleCell = document.createElement('td');
-        titleCell.textContent = game.title;
-        row.appendChild(titleCell);
+    const titleCell = document.createElement('td');
+    titleCell.textContent = game.title;
+    row.appendChild(titleCell);
 
-        const platformCell = document.createElement('td');
-        platformCell.textContent = game.platform;
-        row.appendChild(platformCell);
+    const platformCell = document.createElement('td');
+    platformCell.textContent = game.platform;
+    row.appendChild(platformCell);
 
-        let checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        const checkboxCell = document.createElement('td');
-        checkboxCell.textContent = 'Played';
-        checkboxCell.appendChild(checkbox);
-        row.appendChild(checkboxCell);
+    let checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    const checkboxCell = document.createElement('td');
+    checkboxCell.textContent = 'Played';
+    if (game.played === true) checkbox.checked = true;
+    checkboxCell.appendChild(checkbox);
+    row.appendChild(checkboxCell);
 
-        const removalCell = document.createElement('td');
-        removalCell.textContent = 'Remove';
-        removalCell.style.color = '#0000EE';
-        removalCell.style.cursor = 'pointer';
-        row.appendChild(removalCell);
+    checkboxCell.addEventListener("click", () => {
+        game.played = true;
+        updateLibrary(game);
+    });
 
-        tBody.appendChild(row);
+    const removalCell = document.createElement('td');
+    removalCell.textContent = 'Remove';
+    removalCell.style.color = '#0000EE';
+    removalCell.style.cursor = 'pointer';
+    row.appendChild(removalCell);
 
-        removalCell.addEventListener("click", () => {
-            myLibrary.pop(game);
-            tBody.removeChild(row);
-        });
+    tBody.appendChild(row);
+
+    removalCell.addEventListener("click", () => {
+        removeGameFromLibrary(game);
+        tBody.removeChild(row);
     });
     table.appendChild(tBody);
 }
+
+
+
 
 const addButton = document.getElementById('add');
 const addContainer = document.getElementById('adderContainer');
@@ -130,9 +147,21 @@ addButton.addEventListener('click', () => {
     } else {
         addContainer.removeChild(gameForm);
     }
-}); 
+});
+
+
 
 function addgameToLibrary(game) {
     myLibrary.push(game);
-    displaygames();
+    displayGame(game);
+    localStorage.setItem('Games', JSON.stringify(myLibrary));
+}
+
+function updateLibrary() {
+    localStorage.setItem('Games', JSON.stringify(myLibrary));
+}
+
+function removeGameFromLibrary(game) {
+    myLibrary.pop(game);
+    localStorage.setItem('Games', JSON.stringify(myLibrary));
 }
