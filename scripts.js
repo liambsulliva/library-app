@@ -1,37 +1,13 @@
 const myLibrary = [];
-let currentID = 1;
 
 function game(title, platform) {
     this.title = title;
     this.platform = platform;
-    this.id = currentID;
-    currentID++;
 }
 
 function displaygames() {
-    const tableContainer = document.getElementById('tableContainer');
-    tableContainer.innerHTML = '';
-
-    const table = document.createElement('table');
-    const thead = document.createElement('thead');
-    const theadRow = document.createElement('tr');
-
-    const titleHeader = document.createElement('th');
-    titleHeader.textContent = 'Title';
-    theadRow.appendChild(titleHeader);
-
-    const platformHeader = document.createElement('th');
-    platformHeader.textContent = 'Platform'
-    theadRow.appendChild(platformHeader);
-
-    const removalHeader = document.createElement('th');
-    removalHeader.textContent = '';
-    theadRow.appendChild(removalHeader);
-
-    thead.appendChild(theadRow);
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
+    const table = document.querySelector('#table');
+    const tBody = document.createElement('tBody');
 
     myLibrary.forEach(game => {
         const row = document.createElement('tr');
@@ -57,16 +33,14 @@ function displaygames() {
         removalCell.style.cursor = 'pointer';
         row.appendChild(removalCell);
 
-        tbody.appendChild(row);
+        tBody.appendChild(row);
 
         removalCell.addEventListener("click", () => {
             myLibrary.pop(game);
-            tbody.removeChild(row);
+            tBody.removeChild(row);
         });
     });
-
-    table.appendChild(tbody);
-    tableContainer.appendChild(table);
+    table.appendChild(tBody);
 }
 
 const addButton = document.getElementById('add');
@@ -81,7 +55,6 @@ addButton.addEventListener('click', () => {
         gameForm.style.marginRight = '100px';
         gameForm.style.marginBottom = '25px';
         gameForm.style.border = '1px solid #ccc';
-        gameForm.style.backgroundColor = '#f1f1f1';
 
         const formTitle = document.createElement('h3');
         formTitle.textContent = 'Add New Game';
