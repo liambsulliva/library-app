@@ -20,6 +20,7 @@ const table = document.querySelector('#table');
 const tBody = document.createElement('tBody');
 function displayGame(game) {
     const row = document.createElement('tr');
+    row.classList.add('slide');
 
     const titleCell = document.createElement('td');
     titleCell.textContent = game.title;
@@ -49,6 +50,10 @@ function displayGame(game) {
     row.appendChild(removalCell);
 
     tBody.appendChild(row);
+
+    setTimeout(function(){
+        row.classList.add('show');
+    }, 5);
 
     removalCell.addEventListener("click", () => {
         removeGameFromLibrary(game);
