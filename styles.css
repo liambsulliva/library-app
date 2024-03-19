@@ -28,6 +28,12 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
+    transition: opacity 0.25s ease-in-out;
+    opacity: 0;
+}
+
+.modal.show {
+    opacity: 1;
 }
   
 .modal-content {
@@ -93,11 +99,6 @@ body {
 .slide.show {
     transform: translateY(0%);
     opacity: 1;
-}
-
-.slide.hide {
-    transform: translateY(-50%);
-    opacity: 0;
 }
 
 p {

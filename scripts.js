@@ -53,15 +53,14 @@ function displayGame(game) {
 
     setTimeout(function(){
         row.classList.add('show');
-    }, 5);
+    }, 0);
 
     removalCell.addEventListener("click", () => {
         row.classList.remove('show');
-        row.classList.add('hide');
         removeGameFromLibrary(game);
         setTimeout(function(){
             tBody.removeChild(row);
-        }, 125);
+        }, 125); // Intentionally Ends Early
     });
     table.appendChild(tBody);
 }
@@ -73,9 +72,15 @@ const form = document.querySelector(".modal-content form");
 const openButton = document.getElementById('open');
 openButton.addEventListener('click', () => {
     modal.style.display = "block";
+    setTimeout(function() {
+        modal.classList.add("show");
+    }, 0);
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
+            modal.classList.remove("show");
+            setTimeout(function(){
+                modal.style.display = "none";
+            }, 250);
         }
     }
 });
