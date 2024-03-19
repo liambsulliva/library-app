@@ -28,7 +28,7 @@ body {
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    transition: opacity 0.25s ease-in-out;
+    transition: opacity 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     opacity: 0;
 }
 
@@ -91,7 +91,7 @@ body {
 }
 
 .slide {
-    transition: all 0.25s ease-out;
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);;
     transform: translateY(-50%);
     opacity: 0;
 }
