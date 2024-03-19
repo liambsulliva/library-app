@@ -87,10 +87,17 @@ body {
 .slide {
     transition: all 0.25s ease-out;
     transform: translateY(-50%);
+    opacity: 0;
 }
 
 .slide.show {
     transform: translateY(0%);
+    opacity: 1;
+}
+
+.slide.hide {
+    transform: translateY(-50%);
+    opacity: 0;
 }
 
 p {

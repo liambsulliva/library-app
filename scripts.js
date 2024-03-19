@@ -56,8 +56,12 @@ function displayGame(game) {
     }, 5);
 
     removalCell.addEventListener("click", () => {
+        row.classList.remove('show');
+        row.classList.add('hide');
         removeGameFromLibrary(game);
-        tBody.removeChild(row);
+        setTimeout(function(){
+            tBody.removeChild(row);
+        }, 125);
     });
     table.appendChild(tBody);
 }
