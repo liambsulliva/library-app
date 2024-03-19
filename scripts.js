@@ -39,7 +39,7 @@ function displayGame(game) {
     row.appendChild(checkboxCell);
 
     checkboxCell.addEventListener("click", () => {
-        game.played = true;
+        game.played = !game.played;
         updateLibrary(game);
     });
 
@@ -64,97 +64,42 @@ function displayGame(game) {
 
 
 
-
-const addButton = document.getElementById('add');
-const addContainer = document.getElementById('adderContainer');
-let gameForm;
-addButton.addEventListener('click', () => {
-    if (!addContainer.hasChildNodes(gameForm)) {
-        gameForm = document.createElement('div');
-        gameForm.id = 'gameForm';
-        gameForm.style.padding = '30px';
-        gameForm.style.marginLeft = '100px';
-        gameForm.style.marginRight = '100px';
-        gameForm.style.marginBottom = '25px';
-        gameForm.style.border = '1px solid #ccc';
-
-        const formTitle = document.createElement('h3');
-        formTitle.textContent = 'Add New Game';
-        formTitle.style.textAlign = 'center';
-        gameForm.appendChild(formTitle);
-
-        const form = document.createElement('form');
-
-        const title = document.createElement('div');
-        const titleLabel = document.createElement('label');
-        titleLabel.textContent = 'Title: ';
-        title.style.margin = 'auto';
-        const titleInput = document.createElement('input');
-        titleInput.type = 'text';
-        titleInput.id = 'title';
-        titleInput.name = 'title';
-        titleInput.required = true;
-        title.appendChild(titleLabel);
-        title.appendChild(titleInput);
-        form.appendChild(title);
-        form.appendChild(document.createElement('br'));
-
-        const platform = document.createElement('div');
-        const platformLabel = document.createElement('label');
-        platformLabel.textContent = 'Platform: ';
-        platform.style.margin = 'auto';
-        const platformInput = document.createElement('input');
-        platformInput.type = 'text';
-        platformInput.id = 'platform';
-        platformInput.name = 'platform';
-        platformInput.required = true;
-        platform.appendChild(platformLabel);
-        platform.appendChild(platformInput);
-        form.appendChild(platform);
-        form.appendChild(document.createElement('br'));
-
-        const submitButton = document.createElement('button');
-        submitButton.type = 'button';
-        submitButton.id = 'submitgame';
-        submitButton.textContent = 'Add Game';
-        form.appendChild(submitButton);
-
-        gameForm.appendChild(form);
-
-        addContainer.appendChild(gameForm);
-
-        form.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter') {
-                const title = titleInput.value.trim();
-                const platform = platformInput.value.trim();
-                if (title && platform) {
-                    addgameToLibrary(new game(title, platform));
-                    titleInput.value = '';
-                    platformInput.value = '';
-                    addContainer.removeChild(gameForm);
-                } else {
-                    alert('Please enter a title and platform.');
-                }
-            }
-        });
-        submitButton.addEventListener('click', () => {
-            const title = titleInput.value.trim();
-            const platform = platformInput.value.trim();
-            if (title && platform) {
-                addgameToLibrary(new game(title, platform));
-                titleInput.value = '';
-                platformInput.value = '';
-                addContainer.removeChild(gameForm);
-            } else {
-                alert('Please enter a title and platform.');
-            }
-        });
-    } else {
-        addContainer.removeChild(gameForm);
+const modal = document.getElementById("modal");
+const form = document.querySelector(".modal-content form");
+const openButton = document.getElementById('open');
+openButton.addEventListener('click', () => {
+    modal.style.display = "block";
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 });
 
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
 
+    // Get the form data
+    const formData = new FormData(form);
+    addgameToLibrary(new game(formData.get("title"), formData.get("platform")));
+  
+    // Reset the form
+    form.reset();
+    modal.style.display = "none";
+});
+  
+  // Handle Enter key press
+form.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        form.dispatchEvent(new Event("submit"));
+    }
+});
+
+const closeButton = document.getElementsByClassName("close")[0];
+closeButton.onclick = function() {
+    modal.style.display = "none";
+}
 
 function addgameToLibrary(game) {
     myLibrary.push(game);
