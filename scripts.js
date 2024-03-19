@@ -85,7 +85,14 @@ form.addEventListener("submit", function(event) {
 
     // Get the form data
     const formData = new FormData(form);
-    addgameToLibrary(new game(formData.get("title"), formData.get("platform")));
+    const title = formData.get("title");
+    const platform = formData.get("platform");
+
+    if (!title || !platform) {
+        return;
+    }
+    
+    addgameToLibrary(new game(title, platform));
   
     // Reset the form
     form.reset();
@@ -95,7 +102,6 @@ form.addEventListener("submit", function(event) {
   // Handle Enter key press
 form.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
-        event.preventDefault();
         form.dispatchEvent(new Event("submit"));
     }
 });
