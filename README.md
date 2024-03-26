@@ -12,7 +12,7 @@ Game Tracker is a simple web application that allows you to keep track of the vi
 
 ## Usage
 
-1. Navigate to https://library.liambsullivan.com with your preferred browser.
+1. Navigate to the live preview in your preferred browser.
 2. Click the "Add Game" button to open a modal window.
 3. Enter the title and platform of the game you want to add, and click "Submit".
 4. The game will be added to the list displayed in the table.
